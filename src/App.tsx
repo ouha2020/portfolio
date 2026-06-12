@@ -63,7 +63,7 @@ const navItems = [
   { id: "certificates", key: "certificates" },
 ] as const;
 
-const storageKey = "cloud-native-portfolio-locale";
+const storageKey = "cloud-native-portfolio-locale-v2";
 
 const showcaseRoots = [
   {
@@ -135,7 +135,7 @@ function scrollToSection(id: string, behavior: ScrollBehavior = "smooth") {
 function App() {
   const [locale, setLocale] = useState<Locale>(() => {
     const stored = window.localStorage.getItem(storageKey);
-    return stored === "zh" || stored === "ja" ? stored : "zh";
+    return stored === "zh" || stored === "ja" ? stored : "ja";
   });
   const t = copy[locale];
 
@@ -205,7 +205,7 @@ function App() {
         </nav>
         <div className="header-actions">
           <button
-            className="language-toggle-ghost"
+            className="language-toggle"
             type="button"
             onClick={() => setLocale(locale === "zh" ? "ja" : "zh")}
             aria-label={locale === "zh" ? "日本語に切り替え" : "切换到中文"}

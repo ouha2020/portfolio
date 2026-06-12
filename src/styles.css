@@ -127,14 +127,28 @@ img {
   gap: 18px;
 }
 
-.language-toggle-ghost {
-  width: 0;
-  min-width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  background: transparent;
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: #26384e;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.language-toggle:hover,
+.language-toggle:focus-visible {
+  border-color: #9fc0f6;
+  color: var(--blue);
+  outline: none;
 }
 
 .social-link {
