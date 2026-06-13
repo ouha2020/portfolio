@@ -43,7 +43,7 @@ export const copy = {
       "本番運用を意識したヘルスチェック、リソース制御、分散配置、セキュリティコンテキストを Helm Chart に整理しています。",
     observabilityTitle: "監視・補足資料",
     observabilitySubtitle:
-      "PPT の証跡画像を使い、リリース後のログ確認とプラットフォーム全体像を面接で説明しやすい形に整理しています。",
+      "PPT の証跡画像を使い、リリース後のログ確認を面接で説明しやすい形に整理しています。",
     certificatesTitle: "資格・補足資料",
     certificatesSubtitle: "プレゼン資料から抽出した証跡を、面接時に参照しやすい形で配置します。",
     openEvidence: "資料を確認",
@@ -83,7 +83,7 @@ export const copy = {
       "在 Helm Chart 中整理健康检查、资源控制、调度分布、安全上下文等面向生产的实践。",
     observabilityTitle: "监控 · 补充材料",
     observabilitySubtitle:
-      "用 PPT 中的证据图补充发布后的日志验证和平台整体能力说明，便于面试时快速讲清背景。",
+      "用 PPT 中的证据图补充发布后的日志验证，便于面试时快速讲清发布后的确认方式。",
     certificatesTitle: "证书与补充材料",
     certificatesSubtitle: "从演示材料中抽取证据图，便于面试时快速说明项目背景和资质。",
     openEvidence: "查看资料",
@@ -325,26 +325,6 @@ export const presentationItems: PresentationItem[] = [
       {
         ja: "Jenkins build / GitOps sync 後の実行状態を説明可能",
         zh: "可说明 Jenkins build / GitOps sync 后的运行状态",
-      },
-    ],
-  },
-  {
-    id: "ppt-platform",
-    image: "/assets/ppt-media/image44.jpeg",
-    tag: { ja: "プラットフォーム構成図", zh: "平台架构图" },
-    title: { ja: "PaaS・運用・管制基盤の全体像", zh: "PaaS、运维、管控平台全景" },
-    description: {
-      ja: "アプリケーション運用、PaaS 基盤、ESB/API Gateway、作業・配備・データ・コンテナ管理とクラウド基盤の関係を示す補足資料です。",
-      zh: "这张图说明应用场景、PaaS 平台、ESB/API Gateway、作业/部署/数据/容器管理以及云底座之间的关系。",
-    },
-    points: [
-      {
-        ja: "上段は運用・CI/CD・監視・標準運用などの利用シーン",
-        zh: "上层展示运维、CI/CD、监控、标准运维等使用场景",
-      },
-      {
-        ja: "下段は公有クラウド、私有クラウド、ハイブリッドクラウドの基盤",
-        zh: "下层展示公有云、私有云、混合云等基础设施底座",
       },
     ],
   },

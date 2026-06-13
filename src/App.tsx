@@ -656,13 +656,13 @@ function PresentationEvidenceDeck({ locale }: { locale: Locale }) {
       ? {
           kicker: "PPT 証跡スライド",
           title: "エンドツーエンドデリバリーを補足する資料抜粋",
-          body: "面接で説明しやすいように、リリース後確認とプラットフォーム全体像を大きく表示します。",
+          body: "面接で説明しやすいように、リリース後の Grafana / Loki ログ確認を大きく表示します。",
           open: "原寸で開く",
         }
       : {
           kicker: "PPT 证据页",
           title: "补充端到端交付说明的资料摘录",
-          body: "为了面试讲解更完整，把发布后验证和平台全景作为大图证据展示。",
+          body: "为了面试讲解更完整，仅保留发布后的 Grafana / Loki 日志验证证据。",
           open: "原图打开",
         };
 
