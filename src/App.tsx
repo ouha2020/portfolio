@@ -49,11 +49,12 @@ import {
   capabilityItems,
   certificationItems,
   copy,
-  evidenceItems,
+  jiraDeliverySteps,
+  presentationItems,
   projectModules,
 } from "./content";
 import { codeFiles } from "./codeFiles";
-import type { CapabilityItem, CodeFile, Locale, ProjectModule } from "./types";
+import type { CapabilityItem, CodeFile, JiraDeliveryStep, Locale, ProjectModule } from "./types";
 
 const navItems = [
   { id: "cicd", key: "cicd" },
@@ -262,6 +263,10 @@ function App() {
           </div>
         </section>
 
+        <section className="content-band jira-band">
+          <JiraDeliverySection locale={locale} />
+        </section>
+
         <section id="kubernetes" className="content-band split-band">
           <div>
             <SectionHeader title={t.kubernetesTitle} subtitle={t.kubernetesSubtitle} />
@@ -276,7 +281,7 @@ function App() {
 
         <section id="observability" className="content-band evidence-band">
           <SectionHeader title={t.observabilityTitle} subtitle={t.observabilitySubtitle} />
-          <EvidenceGrid locale={locale} />
+          <PresentationEvidenceDeck locale={locale} />
         </section>
 
         <section id="service-mesh" className="content-band mesh-band">
@@ -348,6 +353,9 @@ function ArchitecturePanel({ locale }: { locale: Locale }) {
     locale === "ja"
       ? {
           developer: "開発者",
+          issue: "Issue / 操作",
+          branchMr: "Branch / MR",
+          trigger: "Jenkins trigger",
           dev: "開発",
           build: "ビルド",
           check: "コード検査",
@@ -369,6 +377,9 @@ function ArchitecturePanel({ locale }: { locale: Locale }) {
         }
       : {
           developer: "开发者",
+          issue: "Issue / 操作",
+          branchMr: "Branch / MR",
+          trigger: "Jenkins 触发",
           dev: "开发",
           build: "构建",
           check: "代码检查",
@@ -396,11 +407,11 @@ function ArchitecturePanel({ locale }: { locale: Locale }) {
       <div className="arch-flow-line">
         <TechNode icon={<UsersRound />} name={labels.developer} caption="" tone="neutral" />
         <span className="arch-arrow" />
-        <TechNode icon={<SiGitlab />} name="GitLab" caption="" tone="gitlab" />
+        <TechNode icon={<SiJira />} name="Jira" caption={labels.issue} tone="jira" />
         <span className="arch-arrow" />
-        <TechNode icon={<SiJira />} name="Jira" caption="" tone="jira" />
+        <TechNode icon={<SiGitlab />} name="GitLab" caption={labels.branchMr} tone="gitlab" />
         <span className="arch-arrow" />
-        <TechNode icon={<Network />} name="Webhook" caption="" tone="slate" />
+        <TechNode icon={<Network />} name="Webhook" caption={labels.trigger} tone="slate" />
       </div>
 
       <div className="arch-layout">
@@ -508,6 +519,94 @@ function ProjectModuleCard({ module, locale }: { module: ProjectModule; locale: 
   );
 }
 
+function JiraDeliverySection({ locale }: { locale: Locale }) {
+  const labels =
+    locale === "ja"
+      ? {
+          kicker: "Jira 起点の E2E デリバリー",
+          title: "Jira からブランチ作成、リリース、コードマージまで",
+          body: "Jira の Issue ステータスを操作点にし、GitLab Branch/MR、Jenkins Pipeline、Helm/GitOps、AKS リリース、MR マージまでを一つの流れで追跡できる構成です。",
+          ticketStatus: "Ready for Release",
+          ticketTitle: "Go demo service release",
+          triggerLabel: "Jira 操作",
+          triggerValue: "ステータス更新 / リリース実行",
+          traceLabel: "追跡キー",
+          traceValue: "DEVOPS-128 / MR / Build / Image tag",
+          actionLabel: "Jira から実行",
+          actions: ["ブランチ作成", "CI 実行", "AKS 反映", "MR マージ"],
+          automationLabel: "自動化",
+        }
+      : {
+          kicker: "Jira 驱动的端到端交付",
+          title: "从 Jira 到分支新建、发布、代码合并",
+          body: "以 Jira Issue 状态作为操作入口，把 GitLab Branch/MR、Jenkins Pipeline、Helm/GitOps、AKS 发布、MR 合并串成一条可追踪链路。",
+          ticketStatus: "Ready for Release",
+          ticketTitle: "Go demo service release",
+          triggerLabel: "Jira 操作",
+          triggerValue: "状态更新 / 执行发布",
+          traceLabel: "追踪键",
+          traceValue: "DEVOPS-128 / MR / Build / Image tag",
+          actionLabel: "从 Jira 执行",
+          actions: ["创建分支", "执行 CI", "发布 AKS", "合并 MR"],
+          automationLabel: "自动化",
+        };
+
+  return (
+    <div className="jira-delivery-layout" aria-label={labels.title}>
+      <div className="jira-delivery-copy">
+        <span className="section-kicker">
+          <SiJira aria-hidden="true" />
+          {labels.kicker}
+        </span>
+        <h2>{labels.title}</h2>
+        <p>{labels.body}</p>
+        <article className="jira-ticket-card">
+          <div className="jira-ticket-head">
+            <span>DEVOPS-128</span>
+            <strong>{labels.ticketStatus}</strong>
+          </div>
+          <h3>{labels.ticketTitle}</h3>
+          <dl>
+            <div>
+              <dt>{labels.triggerLabel}</dt>
+              <dd>{labels.triggerValue}</dd>
+            </div>
+            <div>
+              <dt>{labels.traceLabel}</dt>
+              <dd>{labels.traceValue}</dd>
+            </div>
+          </dl>
+          <div className="jira-ticket-actions" aria-label={labels.actionLabel}>
+            {labels.actions.map((action) => (
+              <span key={action}>
+                <CheckCircle2 size={14} />
+                {action}
+              </span>
+            ))}
+          </div>
+        </article>
+      </div>
+
+      <div className="jira-flow-grid">
+        {jiraDeliverySteps.map((step, index) => (
+          <article className="jira-flow-step" key={step.id}>
+            <div className="jira-step-top">
+              <span className={`jira-step-icon ${step.icon}`}>
+                <JiraStepIcon icon={step.icon} />
+              </span>
+              <span className="jira-step-index">{String(index + 1).padStart(2, "0")}</span>
+            </div>
+            <h3>{step.title[locale]}</h3>
+            <p>{step.description[locale]}</p>
+            <strong>{labels.automationLabel}</strong>
+            <span>{step.automation[locale]}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function CapabilityCard({ item, locale }: { item: CapabilityItem; locale: Locale }) {
   const iconMap = {
     resource: <Cpu />,
@@ -562,22 +661,70 @@ function KubernetesDetail({ locale }: { locale: Locale }) {
   );
 }
 
-function EvidenceGrid({ locale }: { locale: Locale }) {
+function PresentationEvidenceDeck({ locale }: { locale: Locale }) {
+  const labels =
+    locale === "ja"
+      ? {
+          kicker: "PPT 証跡スライド",
+          title: "エンドツーエンドデリバリーを補足する資料抜粋",
+          body: "面接で説明しやすいように、リリース後確認、GitOps/Canary、サービスメッシュ、プラットフォーム全体像を大きく表示します。",
+          open: "原寸で開く",
+        }
+      : {
+          kicker: "PPT 证据页",
+          title: "补充端到端交付说明的资料摘录",
+          body: "为了面试讲解更完整，把发布后验证、GitOps/金丝雀、服务网格和平台全景作为大图证据展示。",
+          open: "原图打开",
+        };
+
   return (
-    <div className="evidence-grid">
-      {evidenceItems.map((item) => (
-        <article className="evidence-card" key={item.id}>
-          <div className="evidence-image">
-            <img src={item.image} alt={item.title[locale]} loading="lazy" />
-          </div>
-          <div className="evidence-copy">
-            <h3>{item.title[locale]}</h3>
-            <p>{item.description[locale]}</p>
-          </div>
-        </article>
-      ))}
+    <div className="ppt-evidence">
+      <div className="ppt-evidence-intro">
+        <span className="section-kicker">
+          <PanelTop aria-hidden="true" />
+          {labels.kicker}
+        </span>
+        <h3>{labels.title}</h3>
+        <p>{labels.body}</p>
+      </div>
+      <div className="ppt-evidence-grid">
+        {presentationItems.map((item, index) => (
+          <article className={index === 0 ? "ppt-card featured" : "ppt-card"} key={item.id}>
+            <a className="ppt-image" href={item.image} target="_blank" rel="noreferrer">
+              <img src={item.image} alt={item.title[locale]} loading="lazy" />
+              <span>{labels.open}</span>
+            </a>
+            <div className="ppt-card-body">
+              <span className="ppt-tag">{item.tag[locale]}</span>
+              <h3>{item.title[locale]}</h3>
+              <p>{item.description[locale]}</p>
+              <ul>
+                {item.points.map((point) => (
+                  <li key={point[locale]}>
+                    <CheckCircle2 size={15} />
+                    {point[locale]}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
+}
+
+function JiraStepIcon({ icon }: { icon: JiraDeliveryStep["icon"] }) {
+  const iconMap = {
+    jira: <SiJira />,
+    branch: <GitBranch />,
+    gitlab: <SiGitlab />,
+    pipeline: <SiJenkins />,
+    deploy: <Rocket />,
+    merge: <PackageCheck />,
+  };
+
+  return iconMap[icon];
 }
 
 function ServiceMeshSection({ locale }: { locale: Locale }) {

@@ -24,6 +24,23 @@ export interface EvidenceItem {
   description: LocalizedText;
 }
 
+export interface JiraDeliveryStep {
+  id: string;
+  title: LocalizedText;
+  description: LocalizedText;
+  automation: LocalizedText;
+  icon: "jira" | "branch" | "gitlab" | "pipeline" | "deploy" | "merge";
+}
+
+export interface PresentationItem {
+  id: string;
+  image: string;
+  tag: LocalizedText;
+  title: LocalizedText;
+  description: LocalizedText;
+  points: LocalizedText[];
+}
+
 export interface CertificationItem {
   id: string;
   image: string;
