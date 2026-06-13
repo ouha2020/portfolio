@@ -1486,6 +1486,48 @@ section {
   font-size: 0.78rem;
   line-height: 1.62;
   tab-size: 4;
+  scrollbar-gutter: stable;
+}
+
+.file-tree,
+.code-tabs,
+.code-block {
+  scrollbar-color: #7f93ad #eef3f9;
+  scrollbar-width: auto;
+}
+
+.file-tree::-webkit-scrollbar,
+.code-tabs::-webkit-scrollbar,
+.code-block::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+.file-tree::-webkit-scrollbar-track,
+.code-tabs::-webkit-scrollbar-track,
+.code-block::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background: #eef3f9;
+}
+
+.file-tree::-webkit-scrollbar-thumb,
+.code-tabs::-webkit-scrollbar-thumb,
+.code-block::-webkit-scrollbar-thumb {
+  border: 3px solid #eef3f9;
+  border-radius: 8px;
+  background: #7f93ad;
+}
+
+.file-tree::-webkit-scrollbar-thumb:hover,
+.code-tabs::-webkit-scrollbar-thumb:hover,
+.code-block::-webkit-scrollbar-thumb:hover {
+  background: #5f748f;
+}
+
+.file-tree::-webkit-scrollbar-corner,
+.code-tabs::-webkit-scrollbar-corner,
+.code-block::-webkit-scrollbar-corner {
+  background: #eef3f9;
 }
 
 .code-line {
