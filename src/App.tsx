@@ -39,7 +39,6 @@ import {
   SiGitlab,
   SiGrafana,
   SiHelm,
-  SiIstio,
   SiJenkins,
   SiJira,
   SiKubernetes,
@@ -60,7 +59,6 @@ const navItems = [
   { id: "cicd", key: "cicd" },
   { id: "kubernetes", key: "kubernetes" },
   { id: "observability", key: "observability" },
-  { id: "service-mesh", key: "serviceMesh" },
   { id: "certificates", key: "certificates" },
 ] as const;
 
@@ -102,7 +100,6 @@ const showcaseCodeFileIds = [
   "helm-deployment",
   "helm-networkpolicy",
   "helm-pdb",
-  "helm-istio",
   "jenkins-k8s",
   "jenkins-ci",
   "jenkins-cd",
@@ -284,10 +281,6 @@ function App() {
           <PresentationEvidenceDeck locale={locale} />
         </section>
 
-        <section id="service-mesh" className="content-band mesh-band">
-          <ServiceMeshSection locale={locale} />
-        </section>
-
         <section id="code" className="content-band code-band">
           <SectionHeader title={t.codeTitle} subtitle={t.codeSubtitle} />
           <CodeBrowser locale={locale} />
@@ -329,7 +322,6 @@ function TechLogoStrip({ locale }: { locale: Locale }) {
     { name: "Jenkins", src: "/assets/logos/jenkins.svg", tone: "jenkins" },
     { name: "GitLab", src: "/assets/logos/gitlab.svg", tone: "gitlab" },
     { name: "Argo CD", src: "/assets/logos/argo.svg", tone: "argo" },
-    { name: "Istio", src: "/assets/logos/istio.svg", tone: "istio" },
     { name: "Prometheus", src: "/assets/logos/prometheus.svg", tone: "prometheus" },
     { name: "Grafana", src: "/assets/logos/grafana.svg", tone: "grafana" },
   ] satisfies Array<{ name: string; src: string; tone: string }>;
@@ -371,7 +363,6 @@ function ArchitecturePanel({ locale }: { locale: Locale }) {
           storage: "保存",
           sideHelm: "Helm Charts",
           sideGitops: "Argo CD / Flux",
-          sideMesh: "Istio Service Mesh",
           ingress: "Ingress",
           namespace: "Namespace: app",
         }
@@ -395,7 +386,6 @@ function ArchitecturePanel({ locale }: { locale: Locale }) {
           storage: "存储",
           sideHelm: "Helm Charts",
           sideGitops: "Argo CD / Flux",
-          sideMesh: "Istio Service Mesh",
           ingress: "Ingress",
           namespace: "Namespace: app",
         };
@@ -463,7 +453,6 @@ function ArchitecturePanel({ locale }: { locale: Locale }) {
         <div className="arch-side">
           <MiniNode icon={<SiHelm />} title={labels.sideHelm} detail="" tone="helm" />
           <MiniNode icon={<SiArgo />} title={labels.sideGitops} detail="GitOps" tone="argo" />
-          <MiniNode icon={<SiIstio />} title={labels.sideMesh} detail="Service Mesh" tone="istio" />
         </div>
       </div>
     </div>
@@ -667,13 +656,13 @@ function PresentationEvidenceDeck({ locale }: { locale: Locale }) {
       ? {
           kicker: "PPT 証跡スライド",
           title: "エンドツーエンドデリバリーを補足する資料抜粋",
-          body: "面接で説明しやすいように、リリース後確認、GitOps/Canary、サービスメッシュ、プラットフォーム全体像を大きく表示します。",
+          body: "面接で説明しやすいように、リリース後確認とプラットフォーム全体像を大きく表示します。",
           open: "原寸で開く",
         }
       : {
           kicker: "PPT 证据页",
           title: "补充端到端交付说明的资料摘录",
-          body: "为了面试讲解更完整，把发布后验证、GitOps/金丝雀、服务网格和平台全景作为大图证据展示。",
+          body: "为了面试讲解更完整，把发布后验证和平台全景作为大图证据展示。",
           open: "原图打开",
         };
 
@@ -725,47 +714,6 @@ function JiraStepIcon({ icon }: { icon: JiraDeliveryStep["icon"] }) {
   };
 
   return iconMap[icon];
-}
-
-function ServiceMeshSection({ locale }: { locale: Locale }) {
-  const t =
-    locale === "ja"
-      ? {
-          title: "サービスメッシュ実践",
-          body: "Istio Gateway/VirtualService を起点に、タイムアウト、リトライ、故障注入、トラフィックミラーリングへ拡張できる構成です。",
-          route: ["frontend v1", "product v1", "order v1", "user v1"],
-          points: ["入口制御", "ルーティング管理", "mTLS 拡張余地", "障害調査のためのミラーリング"],
-        }
-      : {
-          title: "服务网格实践",
-          body: "以 Istio Gateway/VirtualService 为入口，后续可扩展超时、重试、故障注入和流量镜像。",
-          route: ["frontend v1", "product v1", "order v1", "user v1"],
-          points: ["入口控制", "路由管理", "mTLS 扩展空间", "面向故障排查的流量镜像"],
-        };
-
-  return (
-    <div className="mesh-layout">
-      <div className="mesh-copy">
-        <SectionHeader title={t.title} subtitle={t.body} />
-        <ul className="mesh-points">
-          {t.points.map((point) => (
-            <li key={point}>
-              <CheckCircle2 size={16} />
-              {point}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mesh-diagram" aria-label={t.title}>
-        {t.route.map((node, index) => (
-          <div className="mesh-node-wrap" key={node}>
-            <span className="mesh-node">{node}</span>
-            {index < t.route.length - 1 ? <span className="mesh-edge" /> : null}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 }
 
 function CodeBrowser({ locale }: { locale: Locale }) {

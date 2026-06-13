@@ -20,7 +20,6 @@ export const copy = {
       cicd: "CI/CD",
       kubernetes: "Kubernetes",
       observability: "監視",
-      serviceMesh: "サービスメッシュ",
       code: "コード",
       certificates: "資格",
     },
@@ -42,9 +41,9 @@ export const copy = {
     kubernetesTitle: "Kubernetes 最適化とセキュリティ",
     kubernetesSubtitle:
       "本番運用を意識したヘルスチェック、リソース制御、分散配置、セキュリティコンテキストを Helm Chart に整理しています。",
-    observabilityTitle: "監視・GitOps・サービスメッシュ",
+    observabilityTitle: "監視・補足資料",
     observabilitySubtitle:
-      "PPT の証跡画像を使い、リリース後のログ確認、GitOps/Canary、Istio ルーティングまで確認できる形で整理しています。",
+      "PPT の証跡画像を使い、リリース後のログ確認とプラットフォーム全体像を面接で説明しやすい形に整理しています。",
     certificatesTitle: "資格・補足資料",
     certificatesSubtitle: "プレゼン資料から抽出した証跡を、面接時に参照しやすい形で配置します。",
     openEvidence: "資料を確認",
@@ -62,7 +61,6 @@ export const copy = {
       cicd: "CI/CD",
       kubernetes: "Kubernetes",
       observability: "监控",
-      serviceMesh: "服务网格",
       code: "代码",
       certificates: "证书",
     },
@@ -83,9 +81,9 @@ export const copy = {
     kubernetesTitle: "Kubernetes 优化与安全",
     kubernetesSubtitle:
       "在 Helm Chart 中整理健康检查、资源控制、调度分布、安全上下文等面向生产的实践。",
-    observabilityTitle: "监控 · GitOps · 服务网格",
+    observabilityTitle: "监控 · 补充材料",
     observabilitySubtitle:
-      "用 PPT 中的证据图补充发布后的日志验证、GitOps/金丝雀、Istio 路由治理和平台能力说明。",
+      "用 PPT 中的证据图补充发布后的日志验证和平台整体能力说明，便于面试时快速讲清背景。",
     certificatesTitle: "证书与补充材料",
     certificatesSubtitle: "从演示材料中抽取证据图，便于面试时快速说明项目背景和资质。",
     openEvidence: "查看资料",
@@ -331,62 +329,22 @@ export const presentationItems: PresentationItem[] = [
     ],
   },
   {
-    id: "ppt-canary",
-    image: "/assets/ppt-media/image37.png",
-    tag: { ja: "GitOps / Canary", zh: "GitOps / 金丝雀" },
-    title: { ja: "Argo CD による段階的リリース", zh: "Argo CD 渐进式发布" },
-    description: {
-      ja: "Jira のリリース操作から GitOps 側で段階的に流量を切り替える説明資料です。",
-      zh: "说明从 Jira 的发布动作延伸到 GitOps 侧逐步切换流量的过程。",
-    },
-    points: [
-      {
-        ja: "100/0、75/25、50/50 のような段階的切替を可視化",
-        zh: "可视化 100/0、75/25、50/50 等阶段切流",
-      },
-      {
-        ja: "MR merge 前後のリリース検証として使える",
-        zh: "可作为 MR 合并前后的发布验证材料",
-      },
-    ],
-  },
-  {
-    id: "ppt-mesh",
-    image: "/assets/ppt-media/image41.png",
-    tag: { ja: "サービスメッシュ", zh: "服务网格" },
-    title: { ja: "Bookinfo 依存関係と Istio 導入前後", zh: "Bookinfo 依赖与 Istio 导入" },
-    description: {
-      ja: "複数言語サービスの依存関係を起点に、ルーティングやトラフィック制御の必要性を説明します。",
-      zh: "从多语言服务依赖关系出发，说明路由与流量治理的必要性。",
-    },
-    points: [
-      {
-        ja: "Product / Reviews / Ratings / Details の呼び出し関係を整理",
-        zh: "梳理 Product / Reviews / Ratings / Details 的调用关系",
-      },
-      {
-        ja: "Istio の VirtualService、Fault Injection、Mirroring 説明につなげる",
-        zh: "可衔接 Istio VirtualService、故障注入、流量镜像说明",
-      },
-    ],
-  },
-  {
     id: "ppt-platform",
     image: "/assets/ppt-media/image44.jpeg",
-    tag: { ja: "プラットフォーム全体像", zh: "平台全景" },
-    title: { ja: "CI/CD・監視・標準運用の統合図", zh: "CI/CD、监控、标准运维集成图" },
+    tag: { ja: "プラットフォーム構成図", zh: "平台架构图" },
+    title: { ja: "PaaS・運用・管制基盤の全体像", zh: "PaaS、运维、管控平台全景" },
     description: {
-      ja: "Jira を入口にした自動化を、PaaS/運用/監視/データ/第三者連携の文脈へ広げて説明できます。",
-      zh: "把 Jira 入口的自动化扩展到 PaaS、运维、监控、数据和第三方集成的整体语境。",
+      ja: "アプリケーション運用、PaaS 基盤、ESB/API Gateway、作業・配備・データ・コンテナ管理とクラウド基盤の関係を示す補足資料です。",
+      zh: "这张图说明应用场景、PaaS 平台、ESB/API Gateway、作业/部署/数据/容器管理以及云底座之间的关系。",
     },
     points: [
       {
-        ja: "CI/CD、監視、標準運用、補助運営を同じ図で説明",
-        zh: "在同一张图里说明 CI/CD、监控、标准运维和辅助运营",
+        ja: "上段は運用・CI/CD・監視・標準運用などの利用シーン",
+        zh: "上层展示运维、CI/CD、监控、标准运维等使用场景",
       },
       {
-        ja: "面接で作品の範囲と実務背景を補足する資料",
-        zh: "面试时用于补充作品范围与实际业务背景",
+        ja: "下段は公有クラウド、私有クラウド、ハイブリッドクラウドの基盤",
+        zh: "下层展示公有云、私有云、混合云等基础设施底座",
       },
     ],
   },
@@ -409,15 +367,6 @@ export const evidenceItems: EvidenceItem[] = [
     description: {
       ja: "Argo CD/Flux を含む多環境デリバリー改善の説明資料。",
       zh: "包含 Argo CD/Flux 的多环境交付优化说明资料。",
-    },
-  },
-  {
-    id: "mesh-routing",
-    image: "/assets/ppt-media/image41.png",
-    title: { ja: "サービスメッシュの導入", zh: "服务网格导入" },
-    description: {
-      ja: "Istio のルーティング、リトライ、故障注入、ミラーリングの検討資料。",
-      zh: "Istio 路由、重试、故障注入与流量镜像的实践材料。",
     },
   },
 ];

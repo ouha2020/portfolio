@@ -275,7 +275,6 @@ section {
 .tech-logo-icon.jenkins img { width: 38px; height: 38px; }
 .tech-logo-icon.gitlab img { width: 42px; height: 42px; }
 .tech-logo-icon.argo img { width: 39px; height: 39px; }
-.tech-logo-icon.istio img { width: 37px; height: 37px; }
 .tech-logo-icon.prometheus img { width: 40px; height: 40px; }
 .tech-logo-icon.grafana img { width: 38px; height: 38px; }
 
@@ -615,7 +614,6 @@ section {
 
 .mini-node.helm span { color: #091c84; }
 .mini-node.argo span { color: #ef6d5a; }
-.mini-node.istio span { color: #466bb0; }
 .mini-node.prometheus span { color: #e6522c; }
 .mini-node.grafana span { color: #f46800; }
 .mini-node.green span { color: var(--green); }
