@@ -1499,8 +1499,8 @@ section {
 .file-tree::-webkit-scrollbar,
 .code-tabs::-webkit-scrollbar,
 .code-block::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .file-tree::-webkit-scrollbar-track,
@@ -1513,15 +1513,20 @@ section {
 .file-tree::-webkit-scrollbar-thumb,
 .code-tabs::-webkit-scrollbar-thumb,
 .code-block::-webkit-scrollbar-thumb {
-  border: 3px solid #eef3f9;
-  border-radius: 8px;
-  background: #7f93ad;
+  border: 2px solid #eef3f9;
+  border-radius: 10px;
+  background: #647b98;
 }
 
 .file-tree::-webkit-scrollbar-thumb:hover,
 .code-tabs::-webkit-scrollbar-thumb:hover,
 .code-block::-webkit-scrollbar-thumb:hover {
-  background: #5f748f;
+  background: #425c78;
+}
+
+.code-block::-webkit-scrollbar {
+  width: 24px;
+  height: 20px;
 }
 
 .file-tree::-webkit-scrollbar-corner,
