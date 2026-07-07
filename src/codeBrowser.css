@@ -134,7 +134,9 @@
 .code-browser {
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr) 250px;
-  min-height: 520px;
+  height: min(760px, calc(100vh - 112px));
+  min-height: 620px;
+  align-items: stretch;
   overflow: hidden;
   border-top: 1px solid rgba(18, 35, 61, 0.08);
   border-radius: 0 0 16px 16px;
@@ -142,6 +144,7 @@
 }
 
 .file-tree {
+  min-height: 0;
   overflow: auto;
   padding: 16px 10px;
   border-right: 1px solid rgba(18, 35, 61, 0.09);
@@ -201,12 +204,16 @@
 }
 
 .code-main {
+  display: flex;
+  min-height: 0;
   min-width: 0;
+  flex-direction: column;
   background: #ffffff;
 }
 
 .code-tabs {
   display: flex;
+  flex: 0 0 auto;
   overflow-x: auto;
   border-bottom: 1px solid rgba(18, 35, 61, 0.09);
   background: #f8fafd;
@@ -235,12 +242,16 @@
 }
 
 .code-window {
-  min-height: 477px;
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
   background: #0f1724;
 }
 
 .code-window-title {
   display: flex;
+  flex: 0 0 auto;
   min-width: 0;
   align-items: center;
   justify-content: space-between;
@@ -263,7 +274,8 @@
 }
 
 .code-block {
-  height: 430px;
+  min-height: 0;
+  flex: 1 1 auto;
   margin: 0;
   overflow: auto;
   padding: 14px 0 18px;
@@ -328,6 +340,7 @@
 }
 
 .code-details {
+  min-height: 0;
   overflow: auto;
   padding: 22px 20px;
   border-left: 1px solid rgba(18, 35, 61, 0.09);
@@ -398,6 +411,13 @@
 
   .code-browser {
     grid-template-columns: 210px minmax(0, 1fr);
+    height: auto;
+    min-height: 0;
+  }
+
+  .code-main {
+    height: 620px;
+    min-height: 0;
   }
 
   .code-details {
@@ -435,7 +455,8 @@
   }
 
   .code-block {
-    height: 390px;
+    height: auto;
+    flex: 1 1 auto;
     font-size: 0.74rem;
   }
 
