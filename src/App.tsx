@@ -338,8 +338,8 @@ const stackItems = [
   { name: "AWS", img: "/assets/logos/aws.svg" },
   { name: "Grafana", img: "/assets/logos/grafana.svg" },
   { name: "Dynamics 365", img: "/assets/logos/dynamics365.svg" },
-  { name: "Claude Code", img: "/assets/logos/anthropic.svg" },
-  { name: "Codex", img: `${assetBase}openai.svg` },
+  { name: "Claude Code", img: "/assets/logos/claudecode-color.svg" },
+  { name: "Codex", img: "/assets/logos/codex-color.svg" },
 ];
 
 const certificationItems = [
