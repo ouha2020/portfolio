@@ -85,7 +85,7 @@ const copy: Record<Locale, CopyBlock> = {
     secArch: "アーキテクチャ",
     archTab1: "端到端 CI/CD",
     archTab2: "AKS + Dify PoC",
-    archTab3: "学習中コンテンツ",
+    archTab3: "Dynamics 365 F&O",
     archIntro:
       "専門領域 01「Kubernetes エンドツーエンド CI/CD」の全体構成図。Jira の課題起票から CI/CD パイプライン、AKS でのデプロイ、監視・GitOps まで。",
     archIntro2:
@@ -216,7 +216,7 @@ const copy: Record<Locale, CopyBlock> = {
     secArch: "系统架构",
     archTab1: "端到端 CI/CD",
     archTab2: "AKS + Dify PoC",
-    archTab3: "学习中内容",
+    archTab3: "Dynamics 365 F&O",
     archIntro:
       "专业领域 01「基于 Kubernetes 的端到端 CI/CD」的整体架构图。从 Jira 需求创建到 CI/CD 流水线、AKS 部署、监控与 GitOps 全流程。",
     archIntro2:
