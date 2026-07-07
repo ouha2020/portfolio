@@ -890,8 +890,8 @@ function App() {
             <a className="primary" href="mailto:email@example.com">
               email@example.com
             </a>
-            <a href="https://github.com/Andy" target="_blank" rel="noreferrer">
-              github.com/Andy
+            <a href="https://github.com/username" target="_blank" rel="noreferrer">
+              github.com/username
             </a>
             <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
               linkedin.com/in/username
