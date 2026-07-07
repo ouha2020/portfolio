@@ -738,7 +738,7 @@ img {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .cert-card {
@@ -785,13 +785,16 @@ img {
 }
 
 .next-cert {
+  box-sizing: border-box;
   display: flex;
-  min-height: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 0;
+  overflow: hidden;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 14px;
-  padding: 28px 30px;
+  gap: 10px;
+  padding: 24px 28px;
   border: 1px dashed rgba(242, 246, 252, 0.35);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.04);
@@ -810,11 +813,15 @@ img {
 }
 
 .next-cert p {
+  max-width: 100%;
   margin: 0;
+  overflow: hidden;
   color: rgba(242, 246, 252, 0.65);
   font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
   font-size: 0.82rem;
   line-height: 1.8;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .stack-grid {

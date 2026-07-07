@@ -211,42 +211,14 @@
   background: #ffffff;
 }
 
-.code-tabs {
-  display: flex;
-  flex: 0 0 auto;
-  overflow-x: auto;
-  border-bottom: 1px solid rgba(18, 35, 61, 0.09);
-  background: #f8fafd;
-  scrollbar-width: auto;
-}
-
-.code-tabs button {
-  flex: 0 0 auto;
-  min-height: 43px;
-  max-width: 210px;
-  overflow: hidden;
-  border-right: 1px solid rgba(18, 35, 61, 0.08);
-  padding: 11px 16px;
-  color: rgba(18, 35, 61, 0.62);
-  background: transparent;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.code-tabs button.active {
-  color: #005eb8;
-  background: #ffffff;
-  box-shadow: inset 0 -2px 0 #0078d4;
-}
-
 .code-window {
   display: flex;
   min-height: 0;
   flex: 1 1 auto;
   flex-direction: column;
+  border-bottom: 1px solid rgba(143, 183, 223, 0.42);
   background: #0f1724;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .code-window-title {
@@ -288,14 +260,12 @@
 }
 
 .code-block::-webkit-scrollbar,
-.code-tabs::-webkit-scrollbar,
 .file-tree::-webkit-scrollbar {
   width: 14px;
   height: 14px;
 }
 
 .code-block::-webkit-scrollbar-thumb,
-.code-tabs::-webkit-scrollbar-thumb,
 .file-tree::-webkit-scrollbar-thumb {
   border: 3px solid transparent;
   border-radius: 999px;

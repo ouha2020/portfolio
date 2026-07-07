@@ -388,7 +388,6 @@ const showcaseRoots = [
   { root: "app-k8s-helm-go", description: { ja: "アプリ配布 Chart", zh: "应用发布 Chart" } },
   { root: "app-k8s-jenkinslib", description: { ja: "Pipeline 共通化", zh: "Pipeline 共享库" } },
   { root: "JenkinsOnAKS", description: { ja: "Jenkins on AKS", zh: "Jenkins on AKS" } },
-  { root: "portfolio-site", description: { ja: "この展示サイト", zh: "本展示网站" } },
 ] as const;
 
 const showcaseCodeFileIds = [
@@ -406,9 +405,6 @@ const showcaseCodeFileIds = [
   "aks-deployment",
   "aks-route",
   "aks-get-config",
-  "portfolio-app",
-  "portfolio-code-data",
-  "portfolio-styles",
 ] as const;
 
 const showcaseCodeFiles = showcaseCodeFileIds
@@ -493,7 +489,6 @@ function CodeBrowser({ locale }: { locale: Locale }) {
   const groupedFiles = useMemo(() => groupFilesByFolder(showcaseCodeFiles), []);
   const activeFile = showcaseCodeFiles.find((file) => file.id === activeId) ?? showcaseCodeFiles[0];
   const activeRoot = activeFile?.path.split("/")[0] ?? groupedFiles[0]?.root;
-  const activeRootFiles = groupedFiles.find((group) => group.root === activeRoot)?.files ?? showcaseCodeFiles;
   const c = codeBrowserCopy[locale];
 
   if (!activeFile) {
@@ -566,18 +561,6 @@ function CodeBrowser({ locale }: { locale: Locale }) {
         </aside>
 
         <div className="code-main">
-          <div className="code-tabs" role="tablist" aria-label={activeRoot}>
-            {activeRootFiles.map((file) => (
-              <button
-                className={file.id === activeFile.id ? "active" : ""}
-                key={file.id}
-                type="button"
-                onClick={() => setActiveId(file.id)}
-              >
-                {file.label}
-              </button>
-            ))}
-          </div>
           <div className="code-window">
             <div className="code-window-title">
               <span>{activeFile.path}</span>
@@ -907,8 +890,8 @@ function App() {
             <a className="primary" href="mailto:email@example.com">
               email@example.com
             </a>
-            <a href="https://github.com/ouha2020" target="_blank" rel="noreferrer">
-              github.com/ouha2020
+            <a href="https://github.com/Andy" target="_blank" rel="noreferrer">
+              github.com/Andy
             </a>
             <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
               linkedin.com/in/username
