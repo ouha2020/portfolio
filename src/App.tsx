@@ -56,11 +56,111 @@ import { codeFiles } from "./codeFiles";
 import type { CapabilityItem, CodeFile, JiraDeliveryStep, Locale, ProjectModule } from "./types";
 
 const navItems = [
-  { id: "cicd", key: "cicd" },
-  { id: "kubernetes", key: "kubernetes" },
-  { id: "observability", key: "observability" },
-  { id: "certificates", key: "certificates" },
+  { id: "focus", label: { ja: "専門領域", zh: "专业领域" } },
+  { id: "architecture", label: { ja: "アーキテクチャ", zh: "系统架构" } },
+  { id: "code", label: { ja: "コード", zh: "代码" } },
+  { id: "certificates", label: { ja: "資格・認定", zh: "资质认证" } },
+  { id: "stack", label: { ja: "技術スタック", zh: "技术栈" } },
 ] as const;
+
+const personalCopy = {
+  ja: {
+    brand: "Andy",
+    brandSub: "CLOUD NATIVE x BUSINESS",
+    contact: "連絡先",
+    heroBadge: "CLOUD NATIVE · AZURE · FULL-STACK",
+    bridgeCaption: "ビジネスと技術をつなぐ",
+    heroTitleA: "ビジネスと技術を、",
+    heroTitleB: "つなぐ",
+    heroTitleC: "エンジニア。",
+    heroBody:
+      "ビジネス価値を起点に、AI・Microsoft Azure・Dynamics 365・クラウドネイティブ技術を融合し、業務分析から AI アプリケーション開発、企業のデジタル変革、クラウドプラットフォーム構築まで一貫して支援します。",
+    chips: ["クラウドネイティブ & Azure", "フルスタック開発", "Dynamics 365 F&O"],
+    focusLead: "FOCUS AREAS",
+    focusTitle: "専門領域",
+    architectureLead: "ARCHITECTURE",
+    architectureTitle: "アーキテクチャ",
+    architectureIntro:
+      "Jira の課題起票からブランチ作成、CI/CD パイプライン、AKS へのデプロイ、監視確認までを一つの流れとして説明します。",
+    codeLead: "SOURCE CODE",
+    certificatesLead: "CERTIFICATIONS",
+    stackLead: "TECH STACK",
+    contactLead: "CONTACT",
+    contactTitle: "連絡先",
+    contactBody: "プロジェクトのご相談、技術交流など、お気軽にご連絡ください。",
+    focusCards: [
+      {
+        no: "01",
+        title: "Kubernetes エンドツーエンド CI/CD",
+        desc:
+          "CI/CD ツールチェーン全体を AKS 上に構築。Jira 連携によるブランチ作成・マージの自動化、Jenkins Pipeline、Helm、GitOps を組み合わせています。",
+        tags: "AKS · Jenkins · GitLab · Jira · Helm",
+      },
+      {
+        no: "02",
+        title: "Azure AKS + AI PoC 基盤",
+        desc:
+          "Azure AKS とマネージドサービスを組み合わせ、AI アプリケーションや LLM ワークフローを動かすための PoC 基盤へ拡張できる構成です。",
+        tags: "Azure · AKS · LLM · Terraform",
+      },
+      {
+        no: "03",
+        title: "Dynamics 365 F&O 導入・運用",
+        desc:
+          "財務会計、購買・在庫管理、固定資産、プロジェクト管理、会社間取引、システム設定などの業務知識を体系的に学習中です。",
+        tags: "Dynamics 365 · X++ · SSRS · Batch",
+      },
+    ],
+  },
+  zh: {
+    brand: "Andy",
+    brandSub: "CLOUD NATIVE x BUSINESS",
+    contact: "联系方式",
+    heroBadge: "CLOUD NATIVE · AZURE · FULL-STACK",
+    bridgeCaption: "连接业务与技术",
+    heroTitleA: "连接业务与技术的",
+    heroTitleB: "工程师",
+    heroTitleC: "。",
+    heroBody:
+      "以业务价值为导向，融合 AI、Microsoft Azure、Dynamics 365 与云原生技术，从业务分析到 AI 应用开发、企业数字化和云平台建设，打造高可靠、可扩展、持续创造价值的企业级解决方案。",
+    chips: ["云原生 & Azure", "全栈开发", "Dynamics 365 F&O"],
+    focusLead: "FOCUS AREAS",
+    focusTitle: "专业领域",
+    architectureLead: "ARCHITECTURE",
+    architectureTitle: "系统架构",
+    architectureIntro:
+      "从 Jira 需求创建、分支生成、CI/CD 流水线、AKS 部署到监控验证，把端到端交付链路作为一个整体说明。",
+    codeLead: "SOURCE CODE",
+    certificatesLead: "CERTIFICATIONS",
+    stackLead: "TECH STACK",
+    contactLead: "CONTACT",
+    contactTitle: "联系方式",
+    contactBody: "项目合作、技术交流，欢迎随时联系。",
+    focusCards: [
+      {
+        no: "01",
+        title: "基于 Kubernetes 的端到端 CI/CD",
+        desc:
+          "CI/CD 工具链部署在 AKS 上。通过 Jira 联动分支创建与合并，结合 Jenkins Pipeline、Helm 和 GitOps 完成交付闭环。",
+        tags: "AKS · Jenkins · GitLab · Jira · Helm",
+      },
+      {
+        no: "02",
+        title: "Azure AKS + AI PoC 平台",
+        desc:
+          "结合 Azure AKS 与托管服务，扩展为支持 AI 应用和 LLM 工作流的 PoC 基础平台，兼顾安全性、扩展性和运维性。",
+        tags: "Azure · AKS · LLM · Terraform",
+      },
+      {
+        no: "03",
+        title: "Dynamics 365 F&O 实施与运维",
+        desc:
+          "系统学习财务会计、采购与库存、固定资产、项目管理、公司间交易和系统配置等 Dynamics 365 F&O 业务知识。",
+        tags: "Dynamics 365 · X++ · SSRS · Batch",
+      },
+    ],
+  },
+} as const;
 
 const storageKey = "cloud-native-portfolio-locale-v2";
 
@@ -136,6 +236,7 @@ function App() {
     return stored === "zh" || stored === "ja" ? stored : "ja";
   });
   const t = copy[locale];
+  const pc = personalCopy[locale];
 
   const handleAnchorClick = (event: ReactMouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
@@ -150,8 +251,8 @@ function App() {
     document.documentElement.lang = locale === "ja" ? "ja" : "zh-CN";
     document.title =
       locale === "ja"
-        ? "クラウドネイティブ DevOps ポートフォリオ"
-        : "云原生 DevOps 作品演示";
+        ? "Andy | Cloud Native x Business"
+        : "Andy | 云原生与业务技术作品集";
   }, [locale]);
 
   useEffect(() => {
@@ -182,13 +283,16 @@ function App() {
         <a
           className="brand"
           href="#top"
-          aria-label={t.brand}
+          aria-label={pc.brand}
           onClick={(event) => handleAnchorClick(event, "top")}
         >
           <span className="brand-mark">
-            <SiKubernetes aria-hidden="true" />
+            <Cloud aria-hidden="true" />
           </span>
-          <span>{t.brand}</span>
+          <span className="brand-copy">
+            <strong>{pc.brand}</strong>
+            <em>{pc.brandSub}</em>
+          </span>
         </a>
         <nav className="main-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
@@ -197,7 +301,7 @@ function App() {
               href={`#${item.id}`}
               onClick={(event) => handleAnchorClick(event, item.id)}
             >
-              {t.nav[item.key]}
+              {item.label[locale]}
             </a>
           ))}
         </nav>
@@ -217,77 +321,81 @@ function App() {
           <a className="social-link" href="https://www.linkedin.com/" aria-label="LinkedIn">
             <FaLinkedinIn aria-hidden="true" />
           </a>
-          <a className="contact-button" href="#certificates" onClick={(event) => handleAnchorClick(event, "certificates")}>
-            {t.contactCta}
+          <a className="contact-button" href="#contact" onClick={(event) => handleAnchorClick(event, "contact")}>
+            {pc.contact}
           </a>
         </div>
       </header>
 
       <main id="top">
-        <section id="cicd" className="hero-section">
-          <div className="hero-copy">
-            <h1>{t.heroTitle}</h1>
-            <p>{t.heroSubtitle}</p>
-            <div className="hero-actions">
-              <a
-                className="button primary"
-                href="#cicd"
-                onClick={(event) => handleAnchorClick(event, "cicd")}
-              >
-                {t.primaryCta}
-                <ArrowRight size={18} />
-              </a>
-              <a
-                className="button secondary"
-                href="#kubernetes"
-                onClick={(event) => handleAnchorClick(event, "kubernetes")}
-              >
-                {t.secondaryCta}
-                <ArrowRight size={18} />
-              </a>
+        <section className="personal-hero">
+          <div className="personal-hero-inner">
+            <div className="hero-copy">
+              <span className="hero-badge">{pc.heroBadge}</span>
+              <h1>
+                {pc.heroTitleA}
+                <span>{pc.heroTitleB}</span>
+                {pc.heroTitleC}
+              </h1>
+              <p>{pc.heroBody}</p>
+              <div className="hero-chip-row">
+                {pc.chips.map((chip) => (
+                  <span key={chip}>{chip}</span>
+                ))}
+              </div>
             </div>
-            <TechLogoStrip locale={locale} />
+            <div className="bridge-panel" aria-label={pc.bridgeCaption}>
+              <div className="bridge-line">
+                <span>BUSINESS</span>
+                <i />
+                <strong>TECHNOLOGY</strong>
+              </div>
+              <p>{pc.bridgeCaption}</p>
+            </div>
           </div>
-          <ArchitecturePanel locale={locale} />
         </section>
 
-        <section className="module-section" aria-label={t.modulesTitle}>
-          <SectionHeader title={t.modulesTitle} subtitle={t.modulesSubtitle} />
-          <div className="module-strip">
-            {projectModules.map((item) => (
-              <ProjectModuleCard key={item.id} module={item} locale={locale} />
+        <section id="focus" className="portfolio-section focus-section">
+          <PersonalSectionHeader lead={pc.focusLead} title={pc.focusTitle} />
+          <div className="focus-card-grid">
+            {pc.focusCards.map((card) => (
+              <article className="focus-card" key={card.no}>
+                <span>{card.no}</span>
+                <h3>{card.title}</h3>
+                <p>{card.desc}</p>
+                <em>{card.tags}</em>
+              </article>
             ))}
           </div>
         </section>
 
-        <section className="content-band jira-band">
-          <JiraDeliverySection locale={locale} />
-        </section>
-
-        <section id="kubernetes" className="content-band split-band">
-          <div>
-            <SectionHeader title={t.kubernetesTitle} subtitle={t.kubernetesSubtitle} />
-            <div className="capability-grid">
-              {capabilityItems.map((item) => (
-                <CapabilityCard key={item.id} item={item} locale={locale} />
-              ))}
-            </div>
+        <section id="architecture" className="portfolio-section architecture-showcase">
+          <PersonalSectionHeader lead={pc.architectureLead} title={pc.architectureTitle} subtitle={pc.architectureIntro} />
+          <div className="architecture-stage">
+            <ArchitecturePanel locale={locale} />
           </div>
-          <KubernetesDetail locale={locale} />
-        </section>
-
-        <section id="observability" className="content-band evidence-band">
-          <SectionHeader title={t.observabilityTitle} subtitle={t.observabilitySubtitle} />
+          <JiraDeliverySection locale={locale} />
+          <div className="operations-grid">
+            <div>
+              <SectionHeader title={t.kubernetesTitle} subtitle={t.kubernetesSubtitle} />
+              <div className="capability-grid">
+                {capabilityItems.map((item) => (
+                  <CapabilityCard key={item.id} item={item} locale={locale} />
+                ))}
+              </div>
+            </div>
+            <KubernetesDetail locale={locale} />
+          </div>
           <PresentationEvidenceDeck locale={locale} />
         </section>
 
-        <section id="code" className="content-band code-band">
-          <SectionHeader title={t.codeTitle} subtitle={t.codeSubtitle} />
+        <section id="code" className="portfolio-section code-band">
+          <PersonalSectionHeader lead={pc.codeLead} title={t.codeTitle} subtitle={t.codeSubtitle} />
           <CodeBrowser locale={locale} />
         </section>
 
-        <section id="certificates" className="content-band certificate-band">
-          <SectionHeader title={t.certificatesTitle} subtitle={t.certificatesSubtitle} />
+        <section id="certificates" className="portfolio-section certificate-band">
+          <PersonalSectionHeader lead={pc.certificatesLead} title={t.certificatesTitle} subtitle={t.certificatesSubtitle} />
           <div className="certificate-grid">
             {certificationItems.map((item) => (
               <figure className="certificate-card" key={item.id}>
@@ -300,6 +408,20 @@ function App() {
             ))}
           </div>
         </section>
+
+        <section id="stack" className="portfolio-section stack-band">
+          <PersonalSectionHeader lead={pc.stackLead} title={locale === "ja" ? "技術スタック" : "技术栈"} />
+          <TechStackSection locale={locale} />
+        </section>
+
+        <section id="contact" className="portfolio-section contact-band">
+          <PersonalSectionHeader lead={pc.contactLead} title={pc.contactTitle} subtitle={pc.contactBody} />
+          <div className="contact-grid">
+            <a href="mailto:email@example.com">email@example.com</a>
+            <a href="https://github.com/" target="_blank" rel="noreferrer">github.com/username</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin.com/in/username</a>
+          </div>
+        </section>
       </main>
     </div>
   );
@@ -310,6 +432,52 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
     <div className="section-header">
       <h2>{title}</h2>
       {subtitle ? <p>{subtitle}</p> : null}
+    </div>
+  );
+}
+
+function PersonalSectionHeader({
+  lead,
+  title,
+  subtitle,
+}: {
+  lead: string;
+  title: string;
+  subtitle?: string;
+}) {
+  return (
+    <div className="personal-section-header">
+      <span>{lead}</span>
+      <h2>{title}</h2>
+      {subtitle ? <p>{subtitle}</p> : null}
+    </div>
+  );
+}
+
+function TechStackSection({ locale }: { locale: Locale }) {
+  const items = [
+    { name: "Jira", icon: <SiJira /> },
+    { name: "GitLab", icon: <SiGitlab /> },
+    { name: "Jenkins", icon: <SiJenkins /> },
+    { name: "Helm", icon: <SiHelm /> },
+    { name: "Argo CD", icon: <SiArgo /> },
+    { name: "Kubernetes", icon: <SiKubernetes /> },
+    { name: "AKS", icon: <Cloud /> },
+    { name: "Grafana", icon: <SiGrafana /> },
+    { name: "Prometheus", icon: <SiPrometheus /> },
+    { name: "Dynamics 365", icon: <Database /> },
+    { name: "Terraform", icon: <Server /> },
+    { name: "Codex", icon: <Code2 /> },
+  ];
+
+  return (
+    <div className="stack-grid" aria-label={locale === "ja" ? "技術スタック" : "技术栈"}>
+      {items.map((item) => (
+        <span className="stack-item" key={item.name}>
+          {item.icon}
+          <strong>{item.name}</strong>
+        </span>
+      ))}
     </div>
   );
 }
