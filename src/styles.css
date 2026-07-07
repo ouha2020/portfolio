@@ -729,13 +729,14 @@ img {
 }
 
 .cert-inner {
-  max-width: 1060px;
+  max-width: 1240px;
 }
 
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 26px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  align-items: start;
 }
 
 .cert-card {
@@ -745,13 +746,24 @@ img {
   margin: 0;
 }
 
+.cert-card > a {
+  display: block;
+  border-radius: 10px;
+}
+
 .cert-card img {
+  display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: contain;
   border-radius: 10px;
   background: #ffffff;
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
+  transition: transform 0.18s ease;
+}
+
+.cert-card > a:hover img {
+  transform: translateY(-3px) scale(1.015);
 }
 
 .cert-card figcaption {
@@ -772,11 +784,12 @@ img {
 
 .next-cert {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 12px;
-  min-height: 240px;
-  padding: 30px;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 132px;
+  padding: 26px 34px;
   border: 1px dashed rgba(242, 246, 252, 0.35);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.04);
@@ -790,11 +803,12 @@ img {
 }
 
 .next-cert strong {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.25rem;
+  line-height: 1.45;
 }
 
 .next-cert p {
+  max-width: 420px;
   margin: 0;
   color: rgba(242, 246, 252, 0.65);
   font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
@@ -1057,6 +1071,13 @@ img {
 
   .contact-card {
     padding: 34px 24px;
+  }
+
+  .next-cert {
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: auto;
+    padding: 24px;
   }
 
   .contact-links {

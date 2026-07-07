@@ -602,7 +602,9 @@ function App() {
             <div className="cert-grid">
               {certificationItems.map((cert) => (
                 <figure className="cert-card" key={cert.title}>
-                  <img src={cert.image} alt={cert.title} />
+                  <a href={cert.image} target="_blank" rel="noreferrer">
+                    <img src={cert.image} alt={cert.title} />
+                  </a>
                   <figcaption>
                     <strong>{cert.title}</strong>
                     <span>{cert.meta}</span>
