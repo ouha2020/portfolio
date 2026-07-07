@@ -42,7 +42,6 @@ type CopyBlock = {
   archTab3: string;
   archIntro: string;
   archIntro2: string;
-  resultsRunning: string;
   resultsTitle: string;
   resultsIntro: string;
   resultShotLabels: string[];
@@ -91,7 +90,6 @@ const copy: Record<Locale, CopyBlock> = {
       "専門領域 01「Kubernetes エンドツーエンド CI/CD」の全体構成図。Jira の課題起票から CI/CD パイプライン、AKS でのデプロイ、監視・GitOps まで。",
     archIntro2:
       "専門領域 02「Azure AKS + Dify PoC 基盤」の構成図。ingress-nginx から Dify の各コンポーネント、Redis・Weaviate、Azure マネージドサービスと Key Vault CSI による Secret 同期まで。",
-    resultsRunning: "稼働中",
     resultsTitle: "実際の稼働環境",
     resultsIntro:
       "Azure AKS 上に Dify をデプロイし、LLM ワークフローを構築・稼働させた PoC 環境の実画面。",
@@ -223,7 +221,6 @@ const copy: Record<Locale, CopyBlock> = {
       "专业领域 01「基于 Kubernetes 的端到端 CI/CD」的整体架构图。从 Jira 需求创建到 CI/CD 流水线、AKS 部署、监控与 GitOps 全流程。",
     archIntro2:
       "专业领域 02「Azure AKS + Dify PoC 平台」的架构图。从 ingress-nginx 到 Dify 各组件、Redis 与 Weaviate、Azure 托管服务，以及 Key Vault CSI 驱动的 Secret 同步。",
-    resultsRunning: "运行中",
     resultsTitle: "实际运行环境",
     resultsIntro: "在 Azure AKS 上部署 Dify、构建并运行 LLM 工作流的 PoC 环境实际界面。",
     resultShotLabels: ["AKS 工作负载：Dify 各组件均正常运行", "Dify 工作台：应用创建与对话流", "LLM 工作流的编排编辑"],
@@ -783,7 +780,6 @@ function App() {
                 <div className="results-header">
                   <div>
                     <span>RESULTS</span>
-                    <i>{t.resultsRunning}</i>
                   </div>
                   <h3>{resultsTitle}</h3>
                   <p>{resultsIntro}</p>

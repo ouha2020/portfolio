@@ -521,25 +521,6 @@ img {
   letter-spacing: 0.2em;
 }
 
-.results-header i {
-  position: relative;
-  color: #2f8f68;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.results-header i::before {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  margin-right: 8px;
-  border-radius: 999px;
-  background: #3ba776;
-  content: "";
-  vertical-align: middle;
-}
-
 .results-header h3 {
   margin: 0 0 8px;
   font-size: 1.25rem;
