@@ -513,85 +513,87 @@ function App() {
           </div>
         </section>
 
-        <section id="arch" className="section-block architecture-block">
-          <SectionTitle lead={arch === "03" ? t.learnLead : "ARCHITECTURE"} title={arch === "03" ? t.learnTitle : t.secArch} />
-          <div className="arch-tabs" role="tablist" aria-label="Architecture views">
-            <button className={arch === "01" ? "active" : ""} type="button" onClick={() => setArch("01")}>
-              <span>01</span>
-              {t.archTab1}
-            </button>
-            <button className={arch === "02" ? "active" : ""} type="button" onClick={() => setArch("02")}>
-              <span>02</span>
-              {t.archTab2}
-            </button>
-            <button className={arch === "03" ? "active" : ""} type="button" onClick={() => setArch("03")}>
-              <span>03</span>
-              {t.archTab3}
-            </button>
-          </div>
-
-          {showArchitecture ? (
-            <>
-              <p className="section-intro">{archIntro}</p>
-              <a className="architecture-image" href={archImage} target="_blank" rel="noreferrer">
-                <img src={archImage} alt={arch === "01" ? "End-to-end CI/CD architecture on AKS" : "AKS + Dify PoC architecture"} />
-              </a>
-
-              <div className="results-header">
-                <div>
-                  <span>RESULTS</span>
-                  <i>{t.resultsRunning}</i>
-                </div>
-                <h3>{resultsTitle}</h3>
-                <p>{resultsIntro}</p>
-              </div>
-
-              <div className="result-shot-list">
-                {resultShots.map((shot) => (
-                  <figure className="result-shot" key={shot.img}>
-                    <div className="window-bar">
-                      <span />
-                      <span />
-                      <span />
-                      <small>{shot.host}</small>
-                    </div>
-                    <a href={shot.img} target="_blank" rel="noreferrer">
-                      <img src={shot.img} alt={shot.label} />
-                    </a>
-                    <figcaption>{shot.label}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="learning-panel">
-              <div className="learning-summary">
-                <p>{t.learnIntro}</p>
-                <strong>
-                  {learnTotal}
-                  <span>{t.learnUnit}</span>
-                </strong>
-              </div>
-              <div className="learning-grid">
-                {t.learnCats.map((category) => (
-                  <article className="learning-card" key={category.no}>
-                    <div>
-                      <span>{category.no}</span>
-                      <small>
-                        {category.count} {t.learnUnit}
-                      </small>
-                    </div>
-                    <h3>{category.title}</h3>
-                    <ul>
-                      {category.items.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </article>
-                ))}
-              </div>
+        <section id="arch" className="architecture-block">
+          <div className="architecture-inner">
+            <SectionTitle lead={arch === "03" ? t.learnLead : "ARCHITECTURE"} title={arch === "03" ? t.learnTitle : t.secArch} />
+            <div className="arch-tabs" role="tablist" aria-label="Architecture views">
+              <button className={arch === "01" ? "active" : ""} type="button" onClick={() => setArch("01")}>
+                <span>01</span>
+                {t.archTab1}
+              </button>
+              <button className={arch === "02" ? "active" : ""} type="button" onClick={() => setArch("02")}>
+                <span>02</span>
+                {t.archTab2}
+              </button>
+              <button className={arch === "03" ? "active" : ""} type="button" onClick={() => setArch("03")}>
+                <span>03</span>
+                {t.archTab3}
+              </button>
             </div>
-          )}
+
+            {showArchitecture ? (
+              <>
+                <p className="section-intro">{archIntro}</p>
+                <a className="architecture-image" href={archImage} target="_blank" rel="noreferrer">
+                  <img src={archImage} alt={arch === "01" ? "End-to-end CI/CD architecture on AKS" : "AKS + Dify PoC architecture"} />
+                </a>
+
+                <div className="results-header">
+                  <div>
+                    <span>RESULTS</span>
+                    <i>{t.resultsRunning}</i>
+                  </div>
+                  <h3>{resultsTitle}</h3>
+                  <p>{resultsIntro}</p>
+                </div>
+
+                <div className="result-shot-list">
+                  {resultShots.map((shot) => (
+                    <figure className="result-shot" key={shot.img}>
+                      <div className="window-bar">
+                        <span />
+                        <span />
+                        <span />
+                        <small>{shot.host}</small>
+                      </div>
+                      <a href={shot.img} target="_blank" rel="noreferrer">
+                        <img src={shot.img} alt={shot.label} />
+                      </a>
+                      <figcaption>{shot.label}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="learning-panel">
+                <div className="learning-summary">
+                  <p>{t.learnIntro}</p>
+                  <strong>
+                    {learnTotal}
+                    <span>{t.learnUnit}</span>
+                  </strong>
+                </div>
+                <div className="learning-grid">
+                  {t.learnCats.map((category) => (
+                    <article className="learning-card" key={category.no}>
+                      <div>
+                        <span>{category.no}</span>
+                        <small>
+                          {category.count} {t.learnUnit}
+                        </small>
+                      </div>
+                      <h3>{category.title}</h3>
+                      <ul>
+                        {category.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </section>
 
         <section id="certs" className="certificate-section">

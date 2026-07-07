@@ -431,12 +431,14 @@ img {
 
 .architecture-block {
   max-width: none;
+  padding: 92px 40px;
   border-top: 1px solid rgba(18, 35, 61, 0.08);
   border-bottom: 1px solid rgba(18, 35, 61, 0.08);
   background: #ffffff;
+  scroll-margin-top: 92px;
 }
 
-.architecture-block > * {
+.architecture-inner {
   max-width: 1060px;
   margin-right: auto;
   margin-left: auto;
@@ -480,7 +482,7 @@ img {
 
 .section-intro {
   max-width: 640px;
-  margin: 0 auto 26px;
+  margin: 0 0 26px;
   color: rgba(18, 35, 61, 0.68);
   font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
   font-size: 0.88rem;
@@ -979,6 +981,7 @@ img {
   }
 
   .section-block,
+  .architecture-block,
   .contact-footer {
     padding-right: 24px;
     padding-left: 24px;
@@ -1005,7 +1008,8 @@ img {
     text-align: center;
   }
 
-  .section-block {
+  .section-block,
+  .architecture-block {
     padding-top: 64px;
     padding-bottom: 64px;
   }
@@ -1106,6 +1110,7 @@ img {
   }
 
   .section-block,
+  .architecture-block,
   .contact-footer {
     padding-right: 18px;
     padding-left: 18px;
