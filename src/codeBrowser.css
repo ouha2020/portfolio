@@ -1,0 +1,445 @@
+.cicd-code-panel {
+  margin-top: 40px;
+  border: 1px solid rgba(18, 35, 61, 0.1);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(18, 35, 61, 0.08);
+}
+
+.code-browser-heading {
+  padding: 26px 28px 12px;
+}
+
+.code-browser-heading span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.code-browser-heading h3 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 1.35rem;
+}
+
+.code-browser-heading p {
+  max-width: 760px;
+  margin: 0;
+  color: rgba(18, 35, 61, 0.66);
+  font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.9;
+}
+
+.code-scope-actions {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.25fr) repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px 28px 18px;
+}
+
+.code-scope-actions strong {
+  display: flex;
+  align-items: center;
+  color: rgba(18, 35, 61, 0.72);
+  font-size: 0.78rem;
+}
+
+.code-scope-actions button,
+.tree-group button,
+.code-tabs button {
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.code-scope-actions button {
+  display: grid;
+  min-height: 58px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 9px;
+  border: 1px solid rgba(18, 35, 61, 0.12);
+  border-radius: 9px;
+  padding: 10px 12px;
+  background: #f8fafd;
+}
+
+.code-scope-actions button.active {
+  border-color: rgba(0, 120, 212, 0.42);
+  background: #eef6ff;
+  box-shadow: inset 0 0 0 1px rgba(0, 120, 212, 0.12);
+}
+
+.code-scope-actions b {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-scope-actions small {
+  grid-column: 2;
+  overflow: hidden;
+  color: rgba(18, 35, 61, 0.5);
+  font-size: 0.68rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-glyph,
+.file-glyph,
+.root-glyph {
+  display: inline-block;
+  flex: 0 0 auto;
+  border: 1.5px solid currentColor;
+}
+
+.folder-glyph {
+  width: 15px;
+  height: 11px;
+  border-radius: 2px;
+  color: #e0911b;
+}
+
+.folder-glyph::before {
+  display: block;
+  width: 7px;
+  height: 3px;
+  margin: -4px 0 0 -1px;
+  border: 1.5px solid currentColor;
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+  content: "";
+}
+
+.file-glyph {
+  width: 12px;
+  height: 14px;
+  border-radius: 2px;
+  color: rgba(18, 35, 61, 0.45);
+}
+
+.root-glyph {
+  width: 14px;
+  height: 12px;
+  border-radius: 2px;
+  color: rgba(18, 35, 61, 0.72);
+}
+
+.code-browser {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 250px;
+  min-height: 520px;
+  overflow: hidden;
+  border-top: 1px solid rgba(18, 35, 61, 0.08);
+  border-radius: 0 0 16px 16px;
+  background: #f7f9fc;
+}
+
+.file-tree {
+  overflow: auto;
+  padding: 16px 10px;
+  border-right: 1px solid rgba(18, 35, 61, 0.09);
+  background: #f3f6fa;
+}
+
+.tree-root {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 18px;
+  padding: 0 8px;
+  color: rgba(18, 35, 61, 0.86);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.tree-group {
+  margin-bottom: 18px;
+}
+
+.tree-group > button,
+.tree-group div button {
+  display: flex;
+  width: 100%;
+  min-height: 31px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 7px;
+  padding: 7px 8px;
+  color: rgba(18, 35, 61, 0.78);
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.tree-group > button.active {
+  color: var(--ink);
+}
+
+.tree-group div {
+  margin-top: 4px;
+  padding-left: 12px;
+}
+
+.tree-group div button {
+  overflow: hidden;
+  font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-group div button.active {
+  color: #005eb8;
+  background: #e7f1ff;
+}
+
+.code-main {
+  min-width: 0;
+  background: #ffffff;
+}
+
+.code-tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(18, 35, 61, 0.09);
+  background: #f8fafd;
+  scrollbar-width: auto;
+}
+
+.code-tabs button {
+  flex: 0 0 auto;
+  min-height: 43px;
+  max-width: 210px;
+  overflow: hidden;
+  border-right: 1px solid rgba(18, 35, 61, 0.08);
+  padding: 11px 16px;
+  color: rgba(18, 35, 61, 0.62);
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-tabs button.active {
+  color: #005eb8;
+  background: #ffffff;
+  box-shadow: inset 0 -2px 0 #0078d4;
+}
+
+.code-window {
+  min-height: 477px;
+  background: #0f1724;
+}
+
+.code-window-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(242, 246, 252, 0.72);
+  font-size: 0.72rem;
+}
+
+.code-window-title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-window-title b {
+  color: #6eb6ff;
+  font-size: 0.68rem;
+}
+
+.code-block {
+  height: 430px;
+  margin: 0;
+  overflow: auto;
+  padding: 14px 0 18px;
+  color: #d9e7f7;
+  font-family: "Cascadia Code", "Consolas", monospace;
+  font-size: 0.78rem;
+  line-height: 1.75;
+  scrollbar-color: #8fb7df #1b2638;
+  scrollbar-width: auto;
+}
+
+.code-block::-webkit-scrollbar,
+.code-tabs::-webkit-scrollbar,
+.file-tree::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+.code-block::-webkit-scrollbar-thumb,
+.code-tabs::-webkit-scrollbar-thumb,
+.file-tree::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: #8fb7df;
+  background-clip: content-box;
+}
+
+.code-line {
+  display: grid;
+  grid-template-columns: 52px max-content;
+  min-width: max-content;
+  padding-right: 28px;
+}
+
+.line-number {
+  padding-right: 16px;
+  color: rgba(217, 231, 247, 0.42);
+  text-align: right;
+  user-select: none;
+}
+
+.line-code {
+  white-space: pre;
+}
+
+.syntax-keyword {
+  color: #6eb6ff;
+  font-weight: 700;
+}
+
+.syntax-string {
+  color: #f4bf75;
+}
+
+.syntax-number {
+  color: #78d7b5;
+}
+
+.syntax-comment {
+  color: #8796a9;
+  font-style: italic;
+}
+
+.code-details {
+  overflow: auto;
+  padding: 22px 20px;
+  border-left: 1px solid rgba(18, 35, 61, 0.09);
+  background: #f8fafd;
+}
+
+.code-details > span {
+  display: inline-flex;
+  margin-bottom: 12px;
+  border-radius: 7px;
+  padding: 6px 9px;
+  color: #005eb8;
+  background: #e7f1ff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.code-details h4 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.code-details p,
+.code-details li {
+  color: rgba(18, 35, 61, 0.68);
+  font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.85;
+}
+
+.code-details p {
+  margin: 0 0 14px;
+}
+
+.code-details ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.code-details li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.code-details li::before {
+  position: absolute;
+  top: 0.8em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #2f8f68;
+  content: "";
+}
+
+@media (max-width: 1100px) {
+  .code-scope-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .code-scope-actions strong {
+    grid-column: 1 / -1;
+  }
+
+  .code-browser {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .code-details {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(18, 35, 61, 0.09);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .cicd-code-panel {
+    margin-top: 30px;
+    border-radius: 12px;
+  }
+
+  .code-browser-heading,
+  .code-scope-actions {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .code-scope-actions,
+  .code-browser {
+    grid-template-columns: 1fr;
+  }
+
+  .file-tree {
+    max-height: 240px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(18, 35, 61, 0.09);
+  }
+
+  .code-browser {
+    border-radius: 0 0 12px 12px;
+  }
+
+  .code-block {
+    height: 390px;
+    font-size: 0.74rem;
+  }
+
+  .code-line {
+    grid-template-columns: 44px max-content;
+  }
+}

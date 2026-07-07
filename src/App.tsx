@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import { codeFiles } from "./codeFiles";
+import type { CodeFile } from "./types";
+import "./codeBrowser.css";
 import "./styles.css";
 
 type Locale = "ja" | "zh";
@@ -360,6 +363,262 @@ const certificationItems = [
   },
 ];
 
+const codeBrowserCopy = {
+  ja: {
+    lead: "CODE",
+    title: "コードブラウザ",
+    intro:
+      "端到端 CI/CD の説明の最後に、Jira 連携、Jenkins Pipeline、Helm/GitOps、Jenkins on AKS を支える実装ファイルを確認できます。",
+    scope: "表示範囲",
+    fileTree: "repo-root",
+    points: "実装ポイント",
+  },
+  zh: {
+    lead: "CODE",
+    title: "代码浏览器",
+    intro:
+      "放在端到端 CI/CD 的最后，用真实代码展示 Jira 联动、Jenkins Pipeline、Helm/GitOps、Jenkins on AKS 背后的实现文件。",
+    scope: "展示范围",
+    fileTree: "repo-root",
+    points: "实现要点",
+  },
+} as const;
+
+const showcaseRoots = [
+  { root: "app-k8s-helm-go", description: { ja: "アプリ配布 Chart", zh: "应用发布 Chart" } },
+  { root: "app-k8s-jenkinslib", description: { ja: "Pipeline 共通化", zh: "Pipeline 共享库" } },
+  { root: "JenkinsOnAKS", description: { ja: "Jenkins on AKS", zh: "Jenkins on AKS" } },
+  { root: "portfolio-site", description: { ja: "この展示サイト", zh: "本展示网站" } },
+] as const;
+
+const showcaseCodeFileIds = [
+  "helm-values",
+  "helm-deployment",
+  "helm-networkpolicy",
+  "helm-pdb",
+  "jenkins-k8s",
+  "jenkins-ci",
+  "jenkins-cd",
+  "jenkins-gitlab-groovy",
+  "jenkins-checkout-groovy",
+  "aks-values",
+  "aks-jenkins-yaml",
+  "aks-deployment",
+  "aks-route",
+  "aks-get-config",
+  "portfolio-app",
+  "portfolio-code-data",
+  "portfolio-styles",
+] as const;
+
+const showcaseCodeFiles = showcaseCodeFileIds
+  .map((id) => codeFiles.find((file) => file.id === id))
+  .filter((file): file is CodeFile => Boolean(file));
+
+const syntaxKeywords = new Set([
+  "apiVersion",
+  "const",
+  "container",
+  "def",
+  "environment",
+  "export",
+  "from",
+  "function",
+  "if",
+  "import",
+  "kind",
+  "let",
+  "metadata",
+  "name",
+  "pipeline",
+  "return",
+  "script",
+  "spec",
+  "stage",
+  "stages",
+  "steps",
+  "type",
+  "var",
+]);
+
+function groupFilesByFolder(files: CodeFile[]) {
+  return showcaseRoots
+    .map((rootInfo) => ({
+      ...rootInfo,
+      files: files.filter((file) => file.path.split("/")[0] === rootInfo.root),
+    }))
+    .filter((group) => group.files.length > 0);
+}
+
+function tokenizeCodeLine(line: string) {
+  const pattern = /("[^"]*"|'[^']*'|`[^`]*`|\/\/.*$|#.*$|\b\d+(?:\.\d+)?\b|\b[A-Za-z_][\w-]*\b)/g;
+  const tokens: Array<{ text: string; kind?: "comment" | "keyword" | "number" | "string" }> = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(line)) !== null) {
+    if (match.index > lastIndex) {
+      tokens.push({ text: line.slice(lastIndex, match.index) });
+    }
+
+    const text = match[0];
+    const kind =
+      text.startsWith("//") || text.startsWith("#")
+        ? "comment"
+        : text.startsWith("\"") || text.startsWith("'") || text.startsWith("`")
+          ? "string"
+          : /^\d/.test(text)
+            ? "number"
+            : syntaxKeywords.has(text)
+              ? "keyword"
+              : undefined;
+
+    tokens.push({ text, kind });
+    lastIndex = match.index + text.length;
+
+    if (kind === "comment") {
+      break;
+    }
+  }
+
+  if (lastIndex < line.length) {
+    tokens.push({ text: line.slice(lastIndex) });
+  }
+
+  return tokens;
+}
+
+function CodeBrowser({ locale }: { locale: Locale }) {
+  const [activeId, setActiveId] = useState(showcaseCodeFiles[0]?.id ?? "");
+  const groupedFiles = useMemo(() => groupFilesByFolder(showcaseCodeFiles), []);
+  const activeFile = showcaseCodeFiles.find((file) => file.id === activeId) ?? showcaseCodeFiles[0];
+  const activeRoot = activeFile?.path.split("/")[0] ?? groupedFiles[0]?.root;
+  const activeRootFiles = groupedFiles.find((group) => group.root === activeRoot)?.files ?? showcaseCodeFiles;
+  const c = codeBrowserCopy[locale];
+
+  if (!activeFile) {
+    return null;
+  }
+
+  const selectRoot = (root: string) => {
+    const nextFile = groupedFiles.find((group) => group.root === root)?.files[0];
+    if (nextFile) {
+      setActiveId(nextFile.id);
+    }
+  };
+
+  return (
+    <div className="cicd-code-panel">
+      <div className="code-browser-heading">
+        <span>{c.lead}</span>
+        <h3>{c.title}</h3>
+        <p>{c.intro}</p>
+      </div>
+
+      <div className="code-scope-actions" aria-label={c.scope}>
+        <strong>{c.scope}</strong>
+        {groupedFiles.map((group) => (
+          <button
+            className={group.root === activeRoot ? "active" : ""}
+            key={group.root}
+            type="button"
+            onClick={() => selectRoot(group.root)}
+          >
+            <span className="folder-glyph" aria-hidden="true" />
+            <b>{group.root}</b>
+            <small>{group.description[locale]}</small>
+          </button>
+        ))}
+      </div>
+
+      <div className="code-browser">
+        <aside className="file-tree" aria-label={c.fileTree}>
+          <div className="tree-root">
+            <span className="root-glyph" aria-hidden="true" />
+            {c.fileTree}
+          </div>
+          {groupedFiles.map((group) => (
+            <div className="tree-group" key={group.root}>
+              <button
+                className={group.root === activeRoot ? "active" : ""}
+                type="button"
+                onClick={() => selectRoot(group.root)}
+              >
+                <span className="folder-glyph" aria-hidden="true" />
+                {group.root}
+              </button>
+              <div>
+                {group.files.map((file) => (
+                  <button
+                    className={file.id === activeFile.id ? "active" : ""}
+                    key={file.id}
+                    type="button"
+                    onClick={() => setActiveId(file.id)}
+                    title={file.path}
+                  >
+                    <span className="file-glyph" aria-hidden="true" />
+                    {file.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </aside>
+
+        <div className="code-main">
+          <div className="code-tabs" role="tablist" aria-label={activeRoot}>
+            {activeRootFiles.map((file) => (
+              <button
+                className={file.id === activeFile.id ? "active" : ""}
+                key={file.id}
+                type="button"
+                onClick={() => setActiveId(file.id)}
+              >
+                {file.label}
+              </button>
+            ))}
+          </div>
+          <div className="code-window">
+            <div className="code-window-title">
+              <span>{activeFile.path}</span>
+              <b>{activeFile.language}</b>
+            </div>
+            <pre className={`code-block language-${activeFile.language}`}>
+              {activeFile.code.split("\n").map((line, index) => (
+                <span className="code-line" key={`${activeFile.id}-${index}`}>
+                  <span className="line-number">{index + 1}</span>
+                  <code className="line-code">
+                    {tokenizeCodeLine(line).map((token, tokenIndex) =>
+                      token.kind ? (
+                        <span className={`syntax-${token.kind}`} key={`${token.text}-${tokenIndex}`}>
+                          {token.text}
+                        </span>
+                      ) : (
+                        <span key={`${token.text}-${tokenIndex}`}>{token.text}</span>
+                      ),
+                    )}
+                  </code>
+                </span>
+              ))}
+            </pre>
+          </div>
+        </div>
+
+        <aside className="code-details">
+          <span>{c.points}</span>
+          <h4>{activeFile.label}</h4>
+          <p>{activeFile.summary[locale]}</p>
+          <ul>
+            {activeFile.points.map((point) => (
+              <li key={point[locale]}>{point[locale]}</li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
 function getInitialLocale(): Locale {
   if (typeof window === "undefined") {
     return "ja";
@@ -563,6 +822,7 @@ function App() {
                     </figure>
                   ))}
                 </div>
+                {arch === "01" ? <CodeBrowser locale={locale} /> : null}
               </>
             ) : (
               <div className="learning-panel">
