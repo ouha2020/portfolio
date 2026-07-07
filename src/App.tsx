@@ -326,19 +326,19 @@ const copy: Record<Locale, CopyBlock> = {
 };
 
 const stackItems = [
-  { name: "Jira", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" },
-  { name: "GitLab", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg" },
-  { name: "Jenkins", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" },
-  { name: "Docker", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-  { name: "Helm", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg" },
-  { name: "ArgoCD", img: "https://cdn.simpleicons.org/argo/EF7B4D" },
-  { name: "Terraform", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" },
-  { name: "Kubernetes", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg" },
-  { name: "Azure", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" },
-  { name: "AWS", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
-  { name: "Grafana", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" },
-  { name: "Dynamics 365", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" },
-  { name: "Claude Code", img: "https://cdn.simpleicons.org/anthropic/D97757" },
+  { name: "Jira", img: "/assets/logos/jira.svg" },
+  { name: "GitLab", img: "/assets/logos/gitlab.svg" },
+  { name: "Jenkins", img: "/assets/logos/jenkins.svg" },
+  { name: "Docker", img: "/assets/logos/docker.svg" },
+  { name: "Helm", img: "/assets/logos/helm.svg" },
+  { name: "ArgoCD", img: "/assets/logos/argo.svg" },
+  { name: "Terraform", img: "/assets/logos/terraform.svg" },
+  { name: "Kubernetes", img: "/assets/logos/kubernetes.svg" },
+  { name: "Azure", img: "/assets/logos/azure.svg" },
+  { name: "AWS", img: "/assets/logos/aws.svg" },
+  { name: "Grafana", img: "/assets/logos/grafana.svg" },
+  { name: "Dynamics 365", img: "/assets/logos/dynamics365.svg" },
+  { name: "Claude Code", img: "/assets/logos/anthropic.svg" },
   { name: "Codex", img: `${assetBase}openai.svg` },
 ];
 

@@ -804,16 +804,16 @@ img {
 
 .stack-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-  gap: 13px;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
 }
 
 .stack-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 58px;
-  padding: 13px 16px;
+  gap: 14px;
+  min-height: 72px;
+  padding: 14px 18px;
   border: 1px solid rgba(18, 35, 61, 0.09);
   border-radius: 11px;
   background: #ffffff;
@@ -827,13 +827,14 @@ img {
 }
 
 .stack-card img {
-  width: 34px;
-  height: 24px;
+  width: 42px;
+  height: 38px;
+  flex: 0 0 42px;
   object-fit: contain;
 }
 
 .stack-card span {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
