@@ -1,3 +1,4 @@
+import { Menu, X } from "lucide-react";
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { codeFiles } from "./codeFiles";
 import type { CodeFile } from "./types";
@@ -12,6 +13,9 @@ type ProjectItem = {
   title: string;
   desc: string;
   tags: string;
+  impact: string;
+  outcomeLabel?: string;
+  cta: string;
 };
 
 type LearningCategory = {
@@ -22,11 +26,15 @@ type LearningCategory = {
 };
 
 type CopyBlock = {
+  metaTitle: string;
+  metaDescription: string;
   navWork: string;
   navArch: string;
   navCerts: string;
   navStack: string;
   navContact: string;
+  menuOpen: string;
+  menuClose: string;
   bridgeCaption: string;
   heroTitleA: string;
   heroTitleB: string;
@@ -36,6 +44,8 @@ type CopyBlock = {
   chipRole2: string;
   chipRole3: string;
   secWork: string;
+  workIntro: string;
+  projectOutcomeLabel: string;
   secArch: string;
   archTab1: string;
   archTab2: string;
@@ -58,20 +68,34 @@ type CopyBlock = {
   secStack: string;
   secContact: string;
   contactNote: string;
+  contactEmailLabel: string;
+  contactGithubLabel: string;
+  contactLinkedinLabel: string;
+  contactPending: string;
   projects: ProjectItem[];
 };
 
 const storageKey = "andy-personal-site-locale";
 const accent = "#0078d4";
 const assetBase = "/assets/generated/";
+const contactConfig = {
+  email: "",
+  github: "",
+  linkedin: "",
+};
 
 const copy: Record<Locale, CopyBlock> = {
   ja: {
+    metaTitle: "Andy | Cloud Native x Business Engineer",
+    metaDescription:
+      "AI、Azure、Kubernetes、Dify、Dynamics 365 をつなぎ、業務価値を実装に落とし込むクラウドネイティブエンジニアのポートフォリオ。",
     navWork: "専門領域",
     navArch: "アーキテクチャ",
     navCerts: "資格・認定",
     navStack: "技術スタック",
     navContact: "連絡先",
+    menuOpen: "メニューを開く",
+    menuClose: "メニューを閉じる",
     bridgeCaption: "ビジネスと技術をつなぐ",
     heroTitleA: "ビジネスと技術を、",
     heroTitleB: "つなぐ",
@@ -80,12 +104,15 @@ const copy: Record<Locale, CopyBlock> = {
       "ビジネス価値を起点に、AI・Microsoft Azure・Dynamics 365・クラウドネイティブ技術を融合し、業務分析からAIアプリケーション開発、企業のデジタル変革、クラウドプラットフォーム構築まで一貫して支援。高い信頼性・拡張性を備えた、継続的に価値を生み出すエンタープライズソリューションを提供します。",
     chipRole1: "クラウドネイティブ & Azure",
     chipRole2: "フルスタック開発",
-    chipRole3: "Dynamics 365 F&O",
+    chipRole3: "Dynamics 365 F&O 学習中",
     secWork: "専門領域",
+    workIntro:
+      "各領域を、背景・実装・検証結果が追えるケーススタディとして整理しました。まず概要を読み、必要に応じて構成図・実画面・コードまで掘り下げられます。",
+    projectOutcomeLabel: "見せられる成果",
     secArch: "アーキテクチャ",
     archTab1: "端到端 CI/CD",
     archTab2: "AKS + Dify PoC",
-    archTab3: "Dynamics 365 F&O",
+    archTab3: "Dynamics 365 F&O 学習中",
     archIntro:
       "専門領域 01「Kubernetes エンドツーエンド CI/CD」の全体構成図。Jira の課題起票から CI/CD パイプライン、AKS でのデプロイ、監視・GitOps まで。",
     archIntro2:
@@ -112,7 +139,7 @@ const copy: Record<Locale, CopyBlock> = {
     learnTitle: "学習中コンテンツ",
     learnLead: "LEARNING IN PROGRESS",
     learnIntro:
-      "Dynamics 365 Finance & Operations の業務知識と導入・運用スキルを、実機操作を中心に 9 領域・約 50 テーマで体系的に学習中。",
+      "Dynamics 365 Finance & Operations の業務知識と標準機能を、実機操作を中心に 9 領域・約 50 テーマで体系的に学習中。",
     learnUnit: "テーマ",
     learnCats: [
       {
@@ -172,7 +199,11 @@ const copy: Record<Locale, CopyBlock> = {
     ],
     secStack: "技術スタック",
     secContact: "連絡先",
-    contactNote: "プロジェクトのご相談、技術交流など、お気軽にご連絡ください。",
+    contactNote: "プロジェクトのご相談、技術交流など、お気軽にご連絡ください。公開前に下の設定値を実際の連絡先に差し替えてください。",
+    contactEmailLabel: "Email",
+    contactGithubLabel: "GitHub",
+    contactLinkedinLabel: "LinkedIn",
+    contactPending: "実リンク未設定",
     projects: [
       {
         num: "01",
@@ -180,6 +211,8 @@ const copy: Record<Locale, CopyBlock> = {
         desc:
           "CI/CD ツールチェーン全体を AKS 上に構築。Jira 連携によるブランチ作成・マージの自動化、弾性ビルドノードによる動的スケール、Docker in Docker を実践。",
         tags: "AKS · Jenkins · GitLab · Jira · Terraform",
+        impact: "Jenkins 全ステージ成功、品質ゲート通過、Argo CD 同期まで一連の証跡を提示。",
+        cta: "CI/CD 構成を見る",
       },
       {
         num: "02",
@@ -187,22 +220,32 @@ const copy: Record<Locale, CopyBlock> = {
         desc:
           "Dify を生成 AI アプリケーション開発基盤として活用し、LLM ワークフロー、プロンプト管理、AI エージェント機能を提供。Azure AKS とマネージドサービスを組み合わせ、安全性・拡張性・運用性を備えた PoC 環境を実現。",
         tags: "Azure · AKS · Dify · LLM · Terraform",
+        impact: "AKS 上の Dify ワークロード、アプリ作成、LLM ワークフローの稼働画面を提示。",
+        cta: "PoC 基盤を見る",
       },
       {
         num: "03",
-        title: "Dynamics 365 F&O 導入・運用",
+        title: "Dynamics 365 F&O 学習中",
         desc:
-          "財務会計、購買・在庫管理、固定資産、プロジェクト管理、会社間取引、システム設定など、Dynamics 365 Finance & Operations の業務知識と導入・運用スキルを体系的に学習中。",
-        tags: "X++ · SSRS Report · Batch",
+          "財務会計、購買・在庫管理、固定資産、プロジェクト管理、会社間取引、システム設定など、Dynamics 365 Finance & Operations の業務知識と標準機能を体系的に学習中。",
+        tags: "MB-920 · MB-310 学習中 · Finance",
+        impact: "9 領域・約 50 テーマを、業務プロセス別に学習ロードマップ化。",
+        outcomeLabel: "学習中の範囲",
+        cta: "学習範囲を見る",
       },
     ],
   },
   zh: {
+    metaTitle: "Andy | 云原生与业务技术作品集",
+    metaDescription:
+      "融合 AI、Azure、Kubernetes、Dify 与 Dynamics 365，从业务分析到云原生平台和企业应用交付的个人技术作品集。",
     navWork: "专业领域",
     navArch: "系统架构",
     navCerts: "资质认证",
     navStack: "技术栈",
     navContact: "联系方式",
+    menuOpen: "打开菜单",
+    menuClose: "关闭菜单",
     bridgeCaption: "连接业务与技术",
     heroTitleA: "连接业务与技术的",
     heroTitleB: "工程师",
@@ -211,12 +254,15 @@ const copy: Record<Locale, CopyBlock> = {
       "以业务价值为导向，融合 AI、Azure、Dynamics 365 与云原生技术，从业务分析到 AI 应用开发、企业数字化和云平台建设，打造高可靠、可扩展、持续创造价值的现代企业级解决方案。",
     chipRole1: "云原生 & Azure",
     chipRole2: "全栈开发",
-    chipRole3: "Dynamics 365 F&O",
+    chipRole3: "Dynamics 365 F&O 学习中",
     secWork: "专业领域",
+    workIntro:
+      "把每个方向整理成可追溯的案例：先看业务背景与结果，再按需展开架构图、运行截图和关键代码。",
+    projectOutcomeLabel: "可展示成果",
     secArch: "系统架构",
     archTab1: "端到端 CI/CD",
     archTab2: "AKS + Dify PoC",
-    archTab3: "Dynamics 365 F&O",
+    archTab3: "Dynamics 365 F&O 学习中",
     archIntro:
       "专业领域 01「基于 Kubernetes 的端到端 CI/CD」的整体架构图。从 Jira 需求创建到 CI/CD 流水线、AKS 部署、监控与 GitOps 全流程。",
     archIntro2:
@@ -238,7 +284,7 @@ const copy: Record<Locale, CopyBlock> = {
     learnTitle: "学习中内容",
     learnLead: "LEARNING IN PROGRESS",
     learnIntro:
-      "系统学习 Dynamics 365 Finance & Operations 的业务知识与实施运维技能，以实机操作为中心，覆盖 9 大领域、约 50 个专题。",
+      "系统学习 Dynamics 365 Finance & Operations 的业务知识与标准功能，以实机操作为中心，覆盖 9 大领域、约 50 个专题。",
     learnUnit: "个专题",
     learnCats: [
       {
@@ -298,7 +344,11 @@ const copy: Record<Locale, CopyBlock> = {
     ],
     secStack: "技术栈",
     secContact: "联系方式",
-    contactNote: "项目合作、技术交流，欢迎随时联系。",
+    contactNote: "项目合作、技术交流，欢迎随时联系。正式发布前请把下方配置替换为真实邮箱和个人主页链接。",
+    contactEmailLabel: "邮箱",
+    contactGithubLabel: "GitHub",
+    contactLinkedinLabel: "LinkedIn",
+    contactPending: "真实链接待补充",
     projects: [
       {
         num: "01",
@@ -306,6 +356,8 @@ const copy: Record<Locale, CopyBlock> = {
         desc:
           "CI/CD 工具链完全部署在 AKS 中。Jira 需求管理驱动分支创建与合并自动化，弹性构建动态节点，Docker in Docker 实践。",
         tags: "AKS · Jenkins · GitLab · Jira · Terraform",
+        impact: "展示 Jenkins 全阶段成功、质量门禁通过、Argo CD 同步完成的完整证据链。",
+        cta: "查看 CI/CD 架构",
       },
       {
         num: "02",
@@ -313,13 +365,18 @@ const copy: Record<Locale, CopyBlock> = {
         desc:
           "以 Dify 作为生成式 AI 应用开发平台，提供 LLM 工作流、提示词管理与 AI Agent 能力。结合 Azure AKS 与托管服务，构建兼具安全性、可扩展性与可运维性的云原生 PoC 环境。",
         tags: "Azure · AKS · Dify · LLM · Terraform",
+        impact: "展示 AKS 工作负载、Dify 应用创建、LLM 工作流编排的实际运行界面。",
+        cta: "查看 PoC 基础设施",
       },
       {
         num: "03",
-        title: "Dynamics 365 F&O 实施与运维",
+        title: "Dynamics 365 F&O 学习中",
         desc:
-          "系统学习财务会计、采购与库存管理、固定资产、项目管理、公司间交易、系统配置等 Dynamics 365 Finance & Operations 的业务知识与实施运维技能。",
-        tags: "X++ · SSRS Report · Batch",
+          "正在系统学习财务会计、采购与库存管理、固定资产、项目管理、公司间交易、系统配置等 Dynamics 365 Finance & Operations 的业务知识与标准功能。",
+        tags: "MB-920 · MB-310 学习中 · Finance",
+        impact: "按 9 大领域、约 50 个专题拆解业务应用学习路线。",
+        outcomeLabel: "学习中范围",
+        cta: "查看学习范围",
       },
     ],
   },
@@ -618,13 +675,15 @@ function scrollToSection(id: string) {
 function App() {
   const [locale, setLocale] = useState<Locale>(getInitialLocale);
   const [arch, setArch] = useState<ArchTab>("01");
+  const [menuOpen, setMenuOpen] = useState(false);
   const t = copy[locale];
 
   useEffect(() => {
     document.documentElement.lang = locale === "ja" ? "ja" : "zh-CN";
-    document.title = locale === "ja" ? "Andy | Cloud Native x Business" : "Andy | 云原生与业务技术作品集";
+    document.title = t.metaTitle;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", t.metaDescription);
     window.localStorage.setItem(storageKey, locale);
-  }, [locale]);
+  }, [locale, t.metaDescription, t.metaTitle]);
 
   const resultShots = useMemo(() => {
     if (arch === "01") {
@@ -648,6 +707,7 @@ function App() {
   const onNavClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
     event.preventDefault();
     window.history.pushState(null, "", `#${id}`);
+    setMenuOpen(false);
     scrollToSection(id);
   };
 
@@ -663,6 +723,27 @@ function App() {
     window.setTimeout(() => scrollToSection("arch"), 0);
   };
 
+  const contactItems = [
+    {
+      href: contactConfig.email ? `mailto:${contactConfig.email}` : "",
+      label: t.contactEmailLabel,
+      primary: true,
+      value: contactConfig.email || t.contactPending,
+    },
+    {
+      href: contactConfig.github,
+      label: t.contactGithubLabel,
+      primary: false,
+      value: contactConfig.github || t.contactPending,
+    },
+    {
+      href: contactConfig.linkedin,
+      label: t.contactLinkedinLabel,
+      primary: false,
+      value: contactConfig.linkedin || t.contactPending,
+    },
+  ];
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -670,11 +751,22 @@ function App() {
           <LogoMark />
           <span className="brand-copy">
             <strong>Andy</strong>
-            <em>CLOUD NATIVE × BUSINESS</em>
+            <em>{t.bridgeCaption}</em>
           </span>
         </a>
 
-        <nav className="main-nav" aria-label="Primary navigation">
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-controls="primary-navigation"
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? t.menuClose : t.menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <X size={19} strokeWidth={2.2} /> : <Menu size={19} strokeWidth={2.2} />}
+        </button>
+
+        <nav id="primary-navigation" className={`main-nav ${menuOpen ? "open" : ""}`} aria-label="Primary navigation">
           <a href="#work" onClick={(event) => onNavClick(event, "work")}>
             {t.navWork}
           </a>
@@ -734,20 +826,25 @@ function App() {
 
         <section id="work" className="section-block focus-block">
           <SectionTitle lead="FOCUS AREAS" title={t.secWork} />
+          <p className="section-intro section-intro-wide">{t.workIntro}</p>
           <div className="project-grid">
             {t.projects.map((project) => (
-              <button
+              <article
                 className="project-card"
                 key={project.num}
-                type="button"
-                onClick={() => activateArch(project.num)}
               >
                 <span className="project-number">{project.num}</span>
                 <h3>{project.title}</h3>
                 <p>{project.desc}</p>
+                <div className="project-outcome">
+                  <span>{project.outcomeLabel ?? t.projectOutcomeLabel}</span>
+                  <strong>{project.impact}</strong>
+                </div>
                 <small>{project.tags}</small>
-                <b>{project.num === "03" ? t.archTab3 : t.navArch} →</b>
-              </button>
+                <button className="project-cta" type="button" onClick={() => activateArch(project.num)}>
+                  {project.cta}
+                </button>
+              </article>
             ))}
           </div>
         </section>
@@ -883,15 +980,19 @@ function App() {
             <p>{t.contactNote}</p>
           </div>
           <div className="contact-links">
-            <a className="primary" href="mailto:email@example.com">
-              email@example.com
-            </a>
-            <a href="https://github.com/username" target="_blank" rel="noreferrer">
-              github.com/username
-            </a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
-              linkedin.com/in/username
-            </a>
+            {contactItems.map((item) =>
+              item.href ? (
+                <a className={item.primary ? "primary" : ""} href={item.href} key={item.label} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+                  <span>{item.label}</span>
+                  <b>{item.value}</b>
+                </a>
+              ) : (
+                <span className={`contact-link-placeholder ${item.primary ? "primary" : ""}`} key={item.label}>
+                  <span>{item.label}</span>
+                  <b>{item.value}</b>
+                </span>
+              ),
+            )}
           </div>
         </div>
         <div className="footer-line">
