@@ -870,9 +870,9 @@ function App() {
             {showArchitecture ? (
               <>
                 <p className="section-intro">{archIntro}</p>
-                <a className="architecture-image" href={archImage} target="_blank" rel="noreferrer">
+                <div className="architecture-image">
                   <img src={archImage} alt={arch === "01" ? "End-to-end CI/CD architecture on AKS" : "AKS + Dify PoC architecture"} />
-                </a>
+                </div>
 
                 <div className="results-header">
                   <div>
@@ -891,9 +891,9 @@ function App() {
                         <span />
                         <small>{shot.host}</small>
                       </div>
-                      <a href={shot.img} target="_blank" rel="noreferrer">
+                      <div className="shot-image">
                         <img src={shot.img} alt={shot.label} />
-                      </a>
+                      </div>
                       <figcaption>{shot.label}</figcaption>
                     </figure>
                   ))}
@@ -938,9 +938,9 @@ function App() {
             <div className="cert-grid">
               {certificationItems.map((cert) => (
                 <figure className="cert-card" key={cert.title}>
-                  <a href={cert.image} target="_blank" rel="noreferrer">
+                  <div className="cert-image">
                     <img src={cert.image} alt={cert.title} />
-                  </a>
+                  </div>
                   <figcaption>
                     <strong>{cert.title}</strong>
                     <span>{cert.meta}</span>
